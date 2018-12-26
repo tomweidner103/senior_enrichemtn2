@@ -1,19 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
-import { studentThunk } from "../../reducers/AllStudents";
+import { oneCampusThunk } from "../../reducers/OneCampus";
 import { Link } from "react-router-dom";
 
-class Students extends React.Component {
+class SingleCampus extends React.Component {
   constructor() {
     super();
   }
   async componentDidMount() {
-    await this.props.getStudents();
+    await this.props.getOneCampus(this.props.match.params.campusId);
   }
   render() {
-    const students = this.props.allStudents;
+    const campus = this.props.oneCampus;
+    const students = campus.students || [];
     return (
       <div>
+        <h1>{campus.name}</h1>
+        <img src={campus.imageUrl} />
         <ul>
           {students.map(student => {
             return (
@@ -33,17 +36,18 @@ class Students extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    oneCampus: state.oneCampus,
     allStudents: state.allStudents
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getStudents: () => dispatch(studentThunk())
+    getOneCampus: id => dispatch(oneCampusThunk(id))
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Students);
+)(SingleCampus);

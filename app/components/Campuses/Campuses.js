@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { campusThunk } from "../../reducers/AllCampuses";
+import {Link} from 'react-router-dom'
 
 class Campuses extends React.Component {
   constructor() {
@@ -16,8 +17,7 @@ class Campuses extends React.Component {
         <ul>
           {campuses.map(campus => {
             return (
-              <li key={campus.id}>
-                {campus.name}
+              <li key={campus.id}><Link to={`/campuses/${campus.id}`}>{campus.name}</Link>
                 <img src={campus.imageUrl} />
               </li>
             );

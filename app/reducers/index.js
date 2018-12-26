@@ -4,11 +4,15 @@
 import {combineReducers} from 'redux'
 import allCampuses from './AllCampuses'
 import allStudents from './AllStudents'
+import oneCampus from './OneCampus'
+import oneStudent from './OneStudent'
 
 
 const rootReducer = combineReducers({
   allCampuses,
-  allStudents
+  allStudents,
+  oneCampus,
+  oneStudent
 })
 
 export default rootReducer
