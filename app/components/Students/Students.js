@@ -1,15 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { studentThunk, deletedStudent } from "../../reducers/AllStudents";
+import { deletedStudent } from "../../reducers/AllStudents";
 import { Link, withRouter } from "react-router-dom";
 
 class Students extends React.Component {
   constructor() {
     super();
   }
-  async componentDidMount() {
-    await this.props.getStudents();
-  }
+  // async componentDidMount() {
+  //   await this.props.getStudents();
+  // }
   render() {
     const students = this.props.allStudents;
     return (
@@ -20,13 +20,14 @@ class Students extends React.Component {
               <li key={student.id}>
                 <Link to={`/students/${student.id}`}>
                   {student.firstName} {student.lastName}
+                  <div>
+                    <img src={student.imageUrl} />
+                  </div>
                 </Link>
-                <img src={student.imageUrl} />
                 <button
                   onClick={() => {
                     this.props.deleteStudent(student);
-                  }}
-                >
+                  }}>
                   EXPEL
                 </button>
               </li>
@@ -49,7 +50,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getStudents: () => dispatch(studentThunk()),
+    // getStudents: () => dispatch(studentThunk()),
     deleteStudent: student => dispatch(deletedStudent(student))
   };
 };

@@ -7,9 +7,9 @@ class Campuses extends React.Component {
   constructor() {
     super();
   }
-  async componentDidMount() {
-    await this.props.getCampuses();
-  }
+  // async componentDidMount() {
+  //   await this.props.getCampuses();
+  // }
   render() {
     const campuses = this.props.allCampuses;
     return (
@@ -37,7 +37,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCampuses: () => dispatch(campusThunk()),
+    // getCampuses: () => dispatch(campusThunk()),
     deleteCampus: (campus) => dispatch(deleteCampusThunk(campus))
   };
 };

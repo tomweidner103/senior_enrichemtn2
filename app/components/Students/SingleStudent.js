@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { oneStudentThunk } from "../../reducers/OneStudent";
 import { Link } from "react-router-dom";
+import UpdateStudent from "./UpdateStudent";
 
 class SingleStudent extends React.Component {
   constructor() {
@@ -10,6 +11,9 @@ class SingleStudent extends React.Component {
   async componentDidMount() {
     await this.props.getOneStudent(this.props.match.params.studentId);
   }
+  // componentDidUpdate(prevProps){
+  //   console.log('prevprops', prevProps)
+  // }
   render() {
     const student = this.props.oneStudent;
     const campus = student.campus || {};
@@ -22,6 +26,8 @@ class SingleStudent extends React.Component {
         <div>
           <Link to={`/campuses/${campus.id}`}>{campus.name}</Link>
         </div>
+        <UpdateStudent 
+        campuses={this.props.campus} />
       </div>
     );
   }
@@ -29,7 +35,8 @@ class SingleStudent extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    oneStudent: state.oneStudent
+    oneStudent: state.oneStudent,
+    campus: state.allCampuses
   };
 };
 

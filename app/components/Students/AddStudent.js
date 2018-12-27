@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { addStudentThunk } from "../../reducers/AllStudents";
+import StudentForm from './StudentForm'
 
 class AddStudent extends React.Component {
   constructor() {
@@ -33,51 +34,20 @@ class AddStudent extends React.Component {
   }
 
   render() {
-    const campus = this.props.campus;
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="firstName">
-          <input
-            onChange={this.handleChange}
-            name="firstName"
-            placeholder="firstName"
-          />
-        </label>
-        <label htmlFor="lastName">
-          <input
-            onChange={this.handleChange}
-            name="lastName"
-            placeholder="lastName"
-          />
-        </label>
-        <label htmlFor="email">
-          <input
-            onChange={this.handleChange}
-            name="email"
-            placeholder="email"
-          />
-        </label>
-        <label htmlFor="campus">
-          <select onChange={this.getId}>
-            <option>--</option>
-            {campus.map(campus => {
-              return (
-                <option key={campus.id} value={campus.name}>
-                  {campus.name}
-                </option>
-              );
-            })}
-          </select>
-        </label>
-        <button type="submit">Submit</button>
-      </form>
-    );
+    return(
+      <StudentForm 
+      handleChange={this.handleChange}
+      handleSubmit={this.handleSubmit}
+      getId={this.getId}
+      campuses={this.props.campus}
+      />
+    )       
   }
 }
 
 const mapStateToProps = state => {
   return {
-    campus: state.allCampuses
+    campus: state.allCampuses,
   };
 };
 
