@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { campusThunk } from "../../reducers/AllCampuses";
+import { campusThunk, deleteCampusThunk } from "../../reducers/AllCampuses";
 import {Link} from 'react-router-dom'
 
 class Campuses extends React.Component {
@@ -19,10 +19,12 @@ class Campuses extends React.Component {
             return (
               <li key={campus.id}><Link to={`/campuses/${campus.id}`}>{campus.name}</Link>
                 <img src={campus.imageUrl} />
+                <button onClick={() => {this.props.deleteCampus(campus)}}>DELETED</button>
               </li>
             );
           })}
         </ul>
+        <button><Link to='/campuses/add'>Add Campus</Link></button>
       </div>
     );
   }
@@ -35,7 +37,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCampuses: () => dispatch(campusThunk())
+    getCampuses: () => dispatch(campusThunk()),
+    deleteCampus: (campus) => dispatch(deleteCampusThunk(campus))
   };
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { studentThunk } from "../../reducers/AllStudents";
-import { Link } from "react-router-dom";
+import { studentThunk, deletedStudent } from "../../reducers/AllStudents";
+import { Link, withRouter } from "react-router-dom";
 
 class Students extends React.Component {
   constructor() {
@@ -22,10 +22,20 @@ class Students extends React.Component {
                   {student.firstName} {student.lastName}
                 </Link>
                 <img src={student.imageUrl} />
+                <button
+                  onClick={() => {
+                    this.props.deleteStudent(student);
+                  }}
+                >
+                  EXPEL
+                </button>
               </li>
             );
           })}
         </ul>
+        <button>
+          <Link to="/students/add">Add Student</Link>
+        </button>
       </div>
     );
   }
@@ -39,11 +49,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getStudents: () => dispatch(studentThunk())
+    getStudents: () => dispatch(studentThunk()),
+    deleteStudent: student => dispatch(deletedStudent(student))
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Students);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Students)
+);

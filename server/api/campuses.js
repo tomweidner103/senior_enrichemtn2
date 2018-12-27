@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const {Campus} = require("../db/index");
-const {Student} = require("../db/index");
+const { Campus } = require("../db/index");
+const { Student } = require("../db/index");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -11,19 +11,40 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get('/:campusId', async (req,res,next) => {
-  try{
+router.get("/:campusId", async (req, res, next) => {
+  try {
     const campus = await Campus.findById(req.params.campusId, {
-      include: [{model: Student}],
+      include: [{ model: Student }],
       where: {
         campusId: req.params.campusId
       }
-    })
-    console.log('campus', campus)
-    res.json(campus)
-  }catch(err){
-    next(err)
+    });
+    res.json(campus);
+  } catch (err) {
+    next(err);
   }
-})
+});
+
+router.post("/", async (req, res, next) => {
+  try {
+    const campus = await Campus.create(req.body);
+    res.status(201).json(campus);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.delete("/:campusId", async (req, res, next) => {
+  try {
+    const campus = await Campus.destroy({
+      where: {
+        id: req.params.campusId
+      }
+    });
+    res.status(200).json(campus);
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;
