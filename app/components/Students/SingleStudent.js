@@ -16,7 +16,7 @@ class SingleStudent extends React.Component {
   // }
   render() {
     const student = this.props.oneStudent;
-    const campus = student.campus || {};
+    const campus = this.props.campus || [];
     return (
       <div>
         <h1>
@@ -24,10 +24,13 @@ class SingleStudent extends React.Component {
         </h1>
         <img src={student.imageUrl} />
         <div>
-          <Link to={`/campuses/${campus.id}`}>{campus.name}</Link>
+          {campus.map(campus => {
+            if (campus.id === student.campusId) {
+              return <Link to={`/campuses/${campus.id}`} key={campus.id}>{campus.name}</Link>;
+            }
+          })}
         </div>
-        <UpdateStudent 
-        campuses={this.props.campus} />
+        <UpdateStudent state={student} campuses={this.props.campus} />
       </div>
     );
   }

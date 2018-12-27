@@ -29,12 +29,15 @@ class UpdateStudent extends React.Component {
 
   async handleSubmit(evt) {
     evt.preventDefault();
-    await store.dispatch(updateStudentThunk(this.state));
+    const id = this.props.state.id
+    const state = {...this.state, id}
+    await store.dispatch(updateStudentThunk(state));
   }
 
   render() {
     return (
       <StudentForm
+        {...this.props.state}
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
         getId={this.getId}

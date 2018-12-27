@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { oneCampusThunk } from "../../reducers/OneCampus";
 import { Link } from "react-router-dom";
+import UpdateCampus from './UpdateCampus'
 
 class SingleCampus extends React.Component {
   constructor() {
@@ -29,6 +30,9 @@ class SingleCampus extends React.Component {
             );
           })}
         </ul>
+        <div>
+          <UpdateCampus campus={this.props.oneCampus} />
+        </div>
       </div>
     );
   }
@@ -37,7 +41,7 @@ class SingleCampus extends React.Component {
 const mapStateToProps = state => {
   return {
     oneCampus: state.oneCampus,
-    allStudents: state.allStudents
+    allStudents: state.allStudents,
   };
 };
 

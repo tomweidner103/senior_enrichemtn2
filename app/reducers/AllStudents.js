@@ -1,4 +1,5 @@
 import axios from "axios";
+import { UPDATE_STUDENT } from "./OneStudent";
 
 const GET_STUDENTS = "GET_STUDENTS";
 const ADD_STUDENT = "ADD_STUDENT";
@@ -52,6 +53,15 @@ export const deletedStudent = student => {
   };
 };
 
+export const replace = (arr, student) => {
+  for (let i = 0; i < arr.length; i++) {
+    if (student.id === arr[i].id) {
+      arr.splice(i, 1, student);
+    }
+  }
+  return arr;
+};
+
 const allStudents = (state = [], action) => {
   switch (action.type) {
     case GET_STUDENTS:
@@ -64,6 +74,10 @@ const allStudents = (state = [], action) => {
       const students = [...state];
       const newArr2 = students.filter(student => student.id !== id);
       return newArr2;
+    case UPDATE_STUDENT:
+      const student = action.student;
+      const arr = [...state];
+      return replace(arr, student);
     default:
       return state;
   }

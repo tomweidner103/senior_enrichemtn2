@@ -38,18 +38,21 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put('/:studentId', async (req,res,next) => {
-  try{
-    console.log(req.params.studentId)
-    const student = await Student.findByPk(req.params.studentId)
-    const updated = await Student.update(student)
-    console.log('student', student)
-    console.log('updated', updated)
-    res.status(204).json(updated)
-  }catch(err){
-    next(err)
+router.put("/:studentId", async (req, res, next) => {
+  console.log('campusId', req.body.campusId);
+  try {
+    let [numRows, updated] = await Student.update(req.body, {
+      where: {
+        id: req.params.studentId
+      },
+      returning: true,
+      plain: true
+    });
+    res.status(204).json(updated);
+  } catch (err) {
+    next(err);
   }
-})
+});
 
 router.delete("/:studentId", async (req, res, next) => {
   try {

@@ -13,7 +13,7 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:campusId", async (req, res, next) => {
   try {
-    const campus = await Campus.findById(req.params.campusId, {
+    const campus = await Campus.findByPk(req.params.campusId, {
       include: [{ model: Student }],
       where: {
         campusId: req.params.campusId
@@ -29,6 +29,21 @@ router.post("/", async (req, res, next) => {
   try {
     const campus = await Campus.create(req.body);
     res.status(201).json(campus);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/:campusId", async (req, res, next) => {
+  try {
+    const campus = await Campus.update(req.body, {
+      where: {
+        id: req.params.campusId
+      },
+      returning: true,
+      plain: true
+    });
+    res.status(204).json(campus);
   } catch (err) {
     next(err);
   }

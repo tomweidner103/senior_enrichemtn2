@@ -1,4 +1,6 @@
 import axios from "axios";
+import {UPDATE_CAMPUS} from './OneCampus'
+import {replace} from '../reducers/AllStudents'
 
 const ADD_CAMPUS = "ADD_CAMPUS";
 const GET_CAMPUSES = "GET_CAMPUSES";
@@ -64,6 +66,10 @@ const allCampuses = (state = [], action) => {
       const id = action.campus.id;
       const newArr2 = campuses.filter(campus => campus.id !== id);
       return newArr2;
+    case UPDATE_CAMPUS:
+      const arr = [...state]
+      const rpld = action.campus
+      return replace(arr, rpld)
     default:
       return state;
   }

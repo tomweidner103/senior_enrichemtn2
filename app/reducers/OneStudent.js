@@ -1,19 +1,18 @@
 import axios from "axios";
-import { runInNewContext } from "vm";
 
 const ONE_STUDENT = "ONE_STUDENT";
 
-const UPDATE_STUDENT = 'UPDATE_STUDENT'
+export const UPDATE_STUDENT = "UPDATE_STUDENT";
 
 const getOneStudent = student => ({
   type: ONE_STUDENT,
   student
 });
 
-const updateStudent = student => ({
+export const updateStudent = student => ({
   type: UPDATE_STUDENT,
   student
-})
+});
 
 export const oneStudentThunk = id => {
   return async dispatch => {
@@ -28,23 +27,36 @@ export const oneStudentThunk = id => {
 
 export const updateStudentThunk = student => {
   return async dispatch => {
-    try{
-      console.log('student', student)
-      const { data } = await axios.put(`/api/students/${student.id}`, {params: {id:student.id}})
-      dispatch(updateStudent(data))
-    }catch(err){
-      console.error(err)
+    try {
+      const { data } = await axios.get(`/api/students/${student.id}`);
+      const object = update(data, student);
+      await axios.put(`/api/students/${student.id}`, object);
+      dispatch(updateStudent(object));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+};
+
+export const update = (old, student) => {
+  let obj = {};
+  for (let key in old) {
+    if (student[key] === undefined || student[key] === "") {
+      obj[key] = old[key];
+    } else {
+      obj[key] = student[key];
     }
   }
-}
+  return obj;
+};
 
 const oneStudent = (state = {}, action) => {
   switch (action.type) {
     case ONE_STUDENT:
       return action.student;
     case UPDATE_STUDENT:
-      const student = action.student
-      return student
+      const student = action.student;
+      return student;
     default:
       return state;
   }
