@@ -6,6 +6,11 @@ import CampusForm from './CampusForm'
 class AddCampus extends React.Component {
   constructor() {
     super();
+    // this.state = { 
+    //   name: '',
+    //   address: '',
+    //   imageUrl: ''
+    // }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -19,7 +24,7 @@ class AddCampus extends React.Component {
   async handleSubmit(evt) {
     evt.preventDefault();
     await this.props.addCampus(this.state);
-    this.props.history.push('/campuses')
+    // this.props.history.push('/campuses')
   }
   render() {
     return (

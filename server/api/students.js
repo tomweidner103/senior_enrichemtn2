@@ -31,6 +31,9 @@ router.post("/", async (req, res, next) => {
   try {
     const campus = await Campus.findByPk(req.body.campusId);
     const student = await Student.create(req.body);
+    if(student.imageUrl === ''){
+      student.imageUrl = 'student.jpeg'
+    }
     const newStudent = await student.setCampus(campus);
     res.status(201).json(newStudent);
   } catch (err) {

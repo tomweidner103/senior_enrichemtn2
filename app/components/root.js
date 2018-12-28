@@ -13,12 +13,28 @@ import {studentThunk} from '../reducers/AllStudents'
 class Root extends React.Component {
   constructor(){
     super()
+    this.state = {
+      loading: true
+    }
   }
-  async componentDidMount(){
+
+  async load () {
+    if(!this.state.loading) {
+      this.setState({loading:true})
+    }
     await store.dispatch(campusThunk())
     await store.dispatch(studentThunk())
+    this.setState({loading: false})
+  }
+  componentDidMount(){
+    setTimeout(() => {
+      this.load()
+    }, 400)
   }
   render(){
+    if(this.state.loading){
+      return <div className='fun'>Loading</div>
+    }
     return (
       <div>
         <nav>Welcome!</nav>

@@ -19,7 +19,7 @@ class Campuses extends React.Component {
             return (
               <li key={campus.id}><Link to={`/campuses/${campus.id}`}>{campus.name}</Link>
                 <img src={campus.imageUrl} />
-                <button onClick={() => {this.props.deleteCampus(campus)}}>DELETED</button>
+                <button onClick={() => {this.props.deleteCampus(campus)}}>DELETE</button>
               </li>
             );
           })}

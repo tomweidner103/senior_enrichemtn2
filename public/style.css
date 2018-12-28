@@ -31,3 +31,8 @@ main {
   flex-direction: column;
   justify-content: center;
 }
+.fun {
+  text-align: center;
+  font-size: 50px;
+  color: blue;
+}

@@ -18,6 +18,7 @@ class SingleCampus extends React.Component {
       <div>
         <h1>{campus.name}</h1>
         <img src={campus.imageUrl} />
+        <h3>{campus.address}</h3>
         <ul>
           {students.map(student => {
             return (

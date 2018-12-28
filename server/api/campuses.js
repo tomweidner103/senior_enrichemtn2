@@ -28,6 +28,9 @@ router.get("/:campusId", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const campus = await Campus.create(req.body);
+    if(campus.imageUrl === ''){
+      campus.imageUrl = 'college.jpeg'
+    }
     res.status(201).json(campus);
   } catch (err) {
     next(err);
